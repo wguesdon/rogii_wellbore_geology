@@ -80,7 +80,15 @@ def log_run(args: argparse.Namespace) -> None:
                     notes = COALESCE(?, notes)
                 WHERE id = ?
                 """,
-                (*values[0:7], values[7], existing[0]),
+                (
+                    values[0],
+                    values[3],
+                    values[4],
+                    values[5],
+                    values[6],
+                    values[7],
+                    existing[0],
+                ),
             )
         else:
             connection.execute(
