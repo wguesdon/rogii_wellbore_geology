@@ -3,6 +3,10 @@
 The harness separates context from enforcement. The JSON files and the ledger
 are the compact context. The Python entry points decide what can be recorded.
 
+The original context control files are at the repository root:
+`AGENTS.md`, `CLAUDE.md`, `QUEUE.md`, and `SESSION_SUMMARY.md`. They are part
+of the harness, not ancillary documentation. `AGENTS.md` is canonical.
+
 | File | Purpose |
 | --- | --- |
 | `gate.py` | Validates a known winner, evaluates a candidate and a within well rolled null, then appends a ledger record. |

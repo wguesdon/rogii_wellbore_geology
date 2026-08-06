@@ -20,6 +20,11 @@ inference block while sharing the same nine seed base.
 * `solutions/single_path/solution.py` is the other selected model. It omits
   the second datum estimate.
 * `harness/` contains the LLM experiment gates used during the competition.
+* `AGENTS.md` is the canonical operating contract for an agent or a human.
+* `CLAUDE.md` is the Claude Code entry point and points back to `AGENTS.md`.
+* `QUEUE.md` records the next bounded experiments and their commands.
+* `SESSION_SUMMARY.md` is the dated competition handoff, including late
+  measurements and the final selection state.
 * `tracking/ledger.tsv` records every gated base and its rolled null result.
 * `tracking/track_kaggle_runs.py` maintains a local SQLite record of Kaggle
   scores. The database is created locally and is not committed.
@@ -94,10 +99,12 @@ make track-list
 ```
 
 Read [`harness/README.md`](harness/README.md) and
-[`harness/agent_instructions.md`](harness/agent_instructions.md) before
-adapting it. `gate.py` retains the competition specific known winner checks so
-that a copied experiment does not silently report a number from a broken data
-layout.
+[`AGENTS.md`](AGENTS.md) before adapting it. `AGENTS.md`, `QUEUE.md`,
+`tracking/ledger.tsv`, and `SESSION_SUMMARY.md` are the original compact read
+path. The first three are the operating context. The session summary preserves
+the final competition handoff. `gate.py` retains the competition specific known
+winner checks so that a copied experiment does not silently report a number
+from a broken data layout.
 
 ## Writeup
 
