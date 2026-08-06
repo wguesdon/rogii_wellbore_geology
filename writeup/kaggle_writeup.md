@@ -1,25 +1,35 @@
-# 131st place: the gates I put on my agents, and the pipeline they built
+# 131st place: an LLM harness that refuses to lie to you
 
-Finished **131 / 6,191** with a private score of **7.860**, up from **1,887th** on the public board.
-A move of 1,756 places, which tells you most of what you need to know about that public board.
+ROGII - Wellbore Geology Prediction
 
-I did not hand write the code. Three months, 595 commits, 792 Python scripts, roughly 171,000 lines,
-all of it produced by agents working to rules I wrote, and none of it accepted until it cleared a
-gate I built. The gates are the interesting part and the pipeline is fairly ordinary, so I have put
-them in that order.
+Solution Writeup · 131st place · Aug 6, 2026
 
-Of all 51 submissions I made, the one I selected was **the best one on private**. Nothing I left
+
+Finished 131 / 6,191 with a private score of 7.860, up from 1,887th on the public board.
+A move of 1,756 places.
+
+I did not hand write the code. Three months, 595 commits, 792 Python scripts, about 171,000 lines,
+all generated inside an agent system I designed, and none of it accepted until it passed rules I
+wrote. So this writeup starts with the harness, because the harness is the reason the result held.
+
+Of all 51 submissions I made, the one I selected was the best one on private. Nothing I left
 behind would have scored better.
 
 ## The Harness
 
-Agents are very good at generating plausible experiments and very bad at judging their own results.
-Left alone one will find an improvement, believe it, and have built three things on top of it before
-you next look. Every file below is there because that happened to me first.
+Agents are excellent at generating plausible experiments and terrible at judging their own results.
+Left alone they find an improvement, believe it, and build three more things on top of it. Every
+file below exists because that happened first.
 
-### The whole system in one picture
+Worth separating two things that get confused. The four files above are what an agent is allowed to
+read; they are context control, and they are deliberately small against 6,400 lines of archived
+strategy that would otherwise be spent on being wrong. They are not what enforces anything. The
+enforcement lives in about 42 KB of Python that an agent has to pass: `gate.py`, `ensemble.py`
+and `breadth_gate.py`. Documents can be argued with. Those cannot.
 
-```
+## The whole system in one picture
+
+```text
    ┌─────────────────────────────────────────────────────────────────┐
    │  WHAT AN AGENT MAY READ  (four files. not the other 6,400 lines)│
    │                                                                 │
@@ -72,32 +82,26 @@ you next look. Every file below is there because that happened to me first.
         └─────────────────────────┘
 ```
 
-Two things get mixed up here. The four files above are what an agent may **read**. They are context
-control, kept deliberately small against 6,400 lines of archived strategy that would otherwise be
-spent on being wrong, and they enforce nothing at all. The enforcement is about 42 KB of Python an
-agent has to **pass**: `gate.py`, `ensemble.py` and `breadth_gate.py`. You can argue with a document.
-You cannot argue with a script that returns nothing.
-
-### The files, and what each one refuses to do
+## The files, and what each one refuses to do
 
 | file | size | its job |
-|---|---:|---|
-| `harness/gate.py` | 15 KB | The gate for every stack base, and the only route from one to a number. Reproduces the deployed pipeline, refuses to report if the known-winner control drifts, builds the within-well rolled copy itself, appends exactly one row to `LEDGER.tsv`. Particle-filter branches have a separate gate so they are judged against a rebuilt control. |
-| `harness/ensemble.py` | 7.6 KB | Guarded greedy over gated bases. Selects on one half of the wells and reports the other, in both directions, because a best-of-N maximum is a maximum of N noisy statistics. |
+| --- | ---: | --- |
+| `harness/gate.py` | 15 KB | The gate for every stack base, and the only route from one to a number. Reproduces the deployed pipeline, refuses to report if the known winner control drifts, builds the within well rolled copy itself, appends exactly one row to `LEDGER.tsv`. Particle filter branches have a separate gate so they are judged against a rebuilt control. |
+| `harness/ensemble.py` | 7.6 KB | Guarded greedy over gated bases. Selects on one half of the wells and reports the other, in both directions, because a best of N maximum is a maximum of N noisy statistics. |
 | `harness/breadth_gate.py` | 10 KB | The completion gate. Refuses campaign completion while the objective is unreached, and rejects a written list of excuses. |
-| `harness/forward_axes.json` | 57 KB | 39 forward-model axes, each `open`, `tried` or `closed`, each carrying `evidence`, `next_action` and `close_reason`. An axis cannot be closed without a reason. |
+| `harness/forward_axes.json` | 57 KB | 39 forward model axes, each open, tried or closed, each carrying evidence, `next_action` and `close_reason`. An axis cannot be closed without a reason. |
 | `harness/forward_target.json` | 4 KB | The objective, the working CV proxy, the deadline, and the admissible and inadmissible reasons to stop. |
 | `harness/campaign_override_log.tsv` | 2.5 KB | Every early stop, with its justification, timestamped. A campaign can be closed early but never quietly. |
-| `LEDGER.tsv` | 5.9 KB | 52 gated candidates, twelve columns: standalone score, error correlation against two blends, blend-add, rolled-null, folds improved, verdict. Outcomes were 21 KEEP, 16 WASH, 14 MARGINAL, 1 REJECTED, so **fewer than half of everything measured survived**. |
-| `archive/kill_audit.md` | 40 KB | Re-examinations of previously rejected ideas. Several kills turned out to have been measured on the wrong axis. |
+| `LEDGER.tsv` | 5.9 KB | 52 gated candidates, twelve columns: standalone score, error correlation against two blends, blend add, rolled null, folds improved, verdict. Outcomes were 21 KEEP, 16 WASH, 14 MARGINAL, 1 REJECTED, so fewer than half of everything measured survived. |
+| `archive/kill_audit.md` | 40 KB | Re examinations of previously rejected ideas. Several kills turned out to have been measured on the wrong axis. |
 | `archive/negatives.md` | 7.7 KB | Numbered negative results, each with an expiry condition stating what would overturn it. |
 
-### The one I would steal for any other project
+## The one I would steal for any other project
 
 `make lock-check` will not let a campaign end while its objective is unreached, and it carries a
 machine readable list of excuses it rejects:
 
-```
+```text
    ┌─────────────────────────────────────────────────────────┐
    │  INADMISSIBLE reasons to stop                           │
    ├─────────────────────────────────────────────────────────┤
@@ -125,32 +129,25 @@ machine readable list of excuses it rejects:
 Every rejected line is something an agent said to me, in those words, to justify stopping early.
 There is also a deferral detector, so "next session" and "after the deadline" trip the gate.
 
-### Four rules I imposed, each after being burned once
+## Four rules that each caught a real error
 
-**Ship a control in the same run.** Every candidate is gated beside a within-well-shuffled copy of
-itself. **Eleven of the 52 entries in the ledger were killed by that copy**, including `cnn_1d_direct`
-and both `pfz` particle-filter variants, whose apparent contribution the shuffled version reproduced
-or beat. Without the control I would have kept all eleven.
+Ship a control in the same run. The rolled null in the diagram above. A base whose blend add is
+reproduced by a within well shuffled copy of itself was never carrying row level content.
 
-**Nest selection inside the fold.** I reported a number picked on full data once, and choosing the
-best of N arms that way inflates the headline by about 40% here. That is measured, not a rule of
-thumb.
+Nest selection inside the fold. Choosing the best of N arms on full data and reporting that
+arm's CV inflates it by about 40% of the headline here. Measured, not assumed.
 
-**Judge the corrected object, never the raw one.** A base set beat its replacement uncorrected,
-8.157 against 8.182, and lost to it corrected, 7.981 against 7.977. The datum correction's value
-depends on the shape of the path it wraps, so an uncorrected ranking can invert. I had already
-started building on the wrong one.
+Judge the corrected object. One base set beat its replacement uncorrected and lost to it
+corrected, because the datum correction's value depends on the shape of the path it wraps.
 
-**Rank by CV. Use the board to price a target and prove a kernel runs, never to rank.** The
-controlled test is one I ran by accident: adding exactly one base moved CV from 8.9490 to 8.8144, an
-improvement of 0.135, and moved the public board from 7.666 to 7.862, a loss of 0.196. Same pipeline,
-one change, both directions measured. I quoted that at myself every time the board looked tempting.
+Rank by CV. Use the board to price a target and prove a kernel runs, never to rank. The section
+below is what that bought.
 
 ## Solution Overview
 
 ### The whole pipeline in one picture
 
-```
+```text
    WHAT EACH TEST WELL HANDS YOU
      trajectory   X, Y, Z at every measured depth
      gamma ray    the whole lateral, labelled rows and not
@@ -209,7 +206,7 @@ one change, both directions measured. I quoted that at myself every time the boa
 This was the single most valuable observation in the competition, and it is visible the moment you
 plot the residual against measured depth instead of summarising it.
 
-```
+```text
    mean signed residual of the SHIPPED path, by position along the well
    773 wells, 3,783,989 rows, deciles of normalised MD
 
@@ -225,28 +222,28 @@ plot the residual against measured depth instead of summarising it.
 
 Two separate measurements, and it matters which is which.
 
-**Before the ramp existed**, measured 2026-08-03 on the then-deployed path: the per-well constant
-and the per-well slope of the residual correlate at **+0.7640**, 58.4% shared variance. The
+Before the ramp existed, measured 2026-08-03 on the then-deployed path: the per-well constant
+and the per-well slope of the residual correlate at +0.7640, 58.4% shared variance. The
 prediction anchors at the last known TVT and drifts away roughly linearly, so the datum error and
 the slope error are not two prizes, they are one defect seen twice. That is the entire argument for
 a ramp: a per-well estimate applied as a flat shift fixes the heel and leaves the toe.
 
-**After**, the profile above, which is the shipped path measured over all 773 wells. Every decile
+After, the profile above, which is the shipped path measured over all 773 wells. Every decile
 now sits inside 0.4 ft and the residual no longer climbs monotonically toward the toe. Re-shaping
 the correction, changing nothing else, was worth 0.044 ft on CV.
 
 Honest caveat on that picture: it is the residual that survives, not the one the ramp was built to
 kill. The heel deciles are the worst, which is the opposite of the pre-correction shape and suggests
-the ramp slightly overcorrects early in the well. Re-fitting `lambda` was measured and declined at
+the ramp slightly overcorrects early in the well. Re-fitting lambda was measured and declined at
 a 0.0087 ft wash, so this is a known and priced imperfection rather than an oversight.
 
-### The other lever: virtual prediction-start resampling
+## The other lever: virtual prediction-start resampling
 
 A training well is labelled everywhere. The boundary between "known prefix" and "predict this" is
 derived purely from which rows carry a label, so on a training well that boundary can be re-cut
 anywhere.
 
-```
+```text
    one training well, labelled end to end
    ├────────────────────────────────────────────────────────┤
 
@@ -267,7 +264,7 @@ rolled-null control: 0 recuts −0.086, one −0.187, two −0.244, four −0.32
 −0.376.
 
 It also decorrelates seeds for free, because each seed draws different cuts. Three seeds of the
-resampled recipe correlate **0.77 to 0.80**, against 0.89 to 0.92 for ordinary same-recipe seeds, so
+resampled recipe correlate 0.77 to 0.80, against 0.89 to 0.92 for ordinary same-recipe seeds, so
 averaging them buys far more than usual.
 
 CV went 8.225 to 7.159 in the final week.
@@ -277,9 +274,9 @@ CV went 8.225 to 7.159 in the final week.
 Every submission carrying both a CV score and a final one.
 
 | submission | CV | public | private |
-|---|---:|---:|---:|
-| **selected A** | **7.159** | 6.818 | **7.860** |
-| **selected B** | 7.211 | **6.618** | 7.883 |
+| --- | ---: | ---: | ---: |
+| selected A | 7.159 | 6.818 | 7.860 |
+| selected B | 7.211 | 6.618 | 7.883 |
 | C | 7.204 | 6.891 | 7.889 |
 | D | 7.270 | 6.731 | 7.946 |
 | E | 7.372 | 6.992 | 7.989 |
@@ -290,12 +287,12 @@ Every submission carrying both a CV score and a final one.
 | J | 7.977 | 7.796 | 8.791 |
 | K | 8.133 | 7.581 | 8.784 |
 
-Rank correlation of CV to private is **+0.955**. CV to public is **+0.818**. The public set ran
-0.403 ft *easier* than CV; the private set ran 0.714 ft *harder*.
+Rank correlation of CV to private is +0.955. CV to public is +0.818. The public set ran
+0.403 ft easier than CV; the private set ran 0.714 ft harder.
 
 The two selected rows are the whole argument:
 
-```
+```text
                     CV said          public said       private said
    A vs B      A better by 0.052   B better by 0.200   A better by 0.023
                      ✓                    ✗                  ✓
@@ -303,30 +300,28 @@ The two selected rows are the whole argument:
                                    4x the magnitude
 ```
 
-**CV was right and the board was backwards on the one comparison that decided my selection.**
-
----
+CV was right and the board was backwards on the one comparison that decided my selection.
 
 ## What Did Not Work
 
-**The well-as-image family.** Tucker Arrants (5th) mentioned on the last day that his inference is
+The well-as-image family. Tucker Arrants (5th) mentioned on the last day that his inference is
 ~200 forward passes per model, one per well, each well treated as an image. We had built exactly
 that months earlier: a 2D U-Net over a typewell-depth by horizontal-column image emitting a signed
 distance field. I was convinced this was what we had missed.
 
-So I spent an expiring submission on it standalone rather than argue about it. **16.204**, with the
+So I spent an expiring submission on it standalone rather than argue about it. 16.204, with the
 gap to the main pipeline widening from 7.70 ft on the released wells to 9.59 ft on the board. It
 does not transfer standalone. Its real value is as a decorrelated stack column worth 0.017 ft, which
 is where we already had it. Killing my own favourite theory was the best use of a submission all
 competition.
 
-**The train/test overlap trick.** Several scored public notebooks read
+The train/test overlap trick. Several scored public notebooks read
 `train/{well_id}__horizontal_well.csv` for test well ids and lift the label. All three released test
 wells are train wells and reconstruct at 0.0053 ft. It is inert on the graded set, and a submission
 spent confirming that went the wrong way.
 
-**Three constants I quoted instead of re-deriving.** Submission latency was recorded at 5 to 7
-hours; it is **10 minutes**, and the wrong number shaped my entire final day. Board difference noise
+Three constants I quoted instead of re-deriving. Submission latency was recorded at 5 to 7
+hours; it is 10 minutes, and the wrong number shaped my entire final day. Board difference noise
 was modelled at 0.1613 ft when the empirical value over 11 submissions is 0.2782. Two of the three
 happened to support whatever I was arguing at the time.
 
@@ -342,53 +337,33 @@ different pair was 0.008 ft better. Tested properly it was 0.011 ft with a confi
 through zero and a 21% chance of being worse, so I left it alone.
 
 Private says that was a genuine coin flip and I will not claim otherwise. The alternative pair would
-have scored **exactly the same 7.860**, because pick A won inside both pairs and the second slot
+have scored exactly the same 7.860, because pick A won inside both pairs and the second slot
 never got used. The decision did not matter, which is precisely what a confidence interval through
 zero was telling me.
 
 Holding still is what produced the result.
 
-## What I would tell myself at the start
-
-**A rule only counts if it is executable.** Trusting cross validation was never my problem. I was
-not the one running the experiments. An agent was, hundreds of times and unattended, and an agent
-cannot be instructed into discipline by a paragraph in a README. It will read
-the paragraph, agree with it, and then hand me an improvement it has not controlled for, with a
-confident summary attached. What actually worked was making the number physically unobtainable
-unless the control passed. An agent will argue with a document. It cannot argue with a script that
-returns nothing.
-
-**Write the excuses down before you need them.** Every line in that inadmissible list is something
-an agent put to me as a reason to stop working. One at a time they all sound sensible and I would
-probably have accepted half. Collected on one page they are obviously the same excuse in different
-clothes, and once a script could reject them I stopped having the argument.
-
-**Spend an asset that is about to expire.** Three submissions were worth nothing after midnight. I
-put one on the idea I was most confident about and it came back 16.204 against our 6.618. I had
-already started writing it up as the thing we missed. That submission is the only reason this post
-says the opposite.
-
-**Re-derive the number, especially when it suits you.** Three constants shaped my final day and all
-three were wrong. Two happened to support whatever I was arguing at the time. None were hard to
-check. I did not check them because they were already written down in my own files and they agreed
-with me.
-
-**Measure the submission latency on day one.** Mine was recorded at five to seven hours and is
-actually ten minutes. That single wrong number invented a 15:30 cutoff, and ruled out a five hour
-retrain that would have fitted with seven hours to spare.
-
 ## Thanks
 
-To **Chris Deotte**, twice over. The harness described above exists because of his
-[1st place writeup from NeuroGolf 2026](https://www.kaggle.com/competitions/neurogolf-2026/writeups/1st-place-kaggle-agent),
+To Chris Deotte, twice over. The harness described above exists because of his
+1st place writeup from NeuroGolf 2026,
 which is where I took the idea from; what is above is that idea carried onto a different problem.
 And his read on this competition, that the public board was noisy and a large shakeup was coming, is
 what made me willing to sit on two picks and spend nothing on the final day.
 
-To **Tucker Arrants** for saying plainly on the final day that CV should be trusted over the public
-board, and for publishing the fold spread that proved it, and to **Georgy Mamarin** for measuring
+To Tucker Arrants for saying plainly on the final day that CV should be trusted over the public
+board, and for publishing the fold spread that proved it, and to Georgy Mamarin for measuring
 the resubmission noise floor. Between them they set the bar I priced every remaining candidate
 against.
 
-To **ROGII** for a dataset where the hard part is a real physical problem rather than an artefact of
+To ROGII for a dataset where the hard part is a real physical problem rather than an artefact of
 the scoring.
+
+## Author
+
+Will
+wguesdon
+
+## Citation
+
+Will. 131st place: an LLM harness that refuses to lie to you. https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/writeups/131st-place-an-llm-harness-that-refuses-to-lie-to. 2026. Kaggle
