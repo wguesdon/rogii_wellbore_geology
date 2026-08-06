@@ -33,9 +33,9 @@ inference block while sharing the same nine seed base.
 No competition data, checkpoints, fitted models, or generated predictions are
 committed. They are Kaggle inputs or large derived artifacts.
 
-## Run a final solution on Kaggle
+## Run the final inference pipeline on Kaggle
 
-The solution is an inference kernel. Training and artifact creation happened
+The final inference pipeline is a Kaggle kernel. Training and artifact creation happened
 before the final submissions. It needs the competition source and these seven
 Kaggle datasets:
 
