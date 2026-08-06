@@ -1,0 +1,60 @@
+{
+  "objective": "gold medal",
+  "objective_lb": 5.521,
+  "medal_lb": {
+    "bronze": 6.409,
+    "silver": 6.359,
+    "gold": 5.521
+  },
+  "goal_cv": 6.0,
+  "deadline": "2026-08-05",
+  "minimum_open_axes_while_unreached": 1,
+  "rationale": "The owner's objective is GOLD. goal_cv 6.0 remains the working proxy. IMPORTANT CHANGE 2026-08-04: the CV-to-LB relationship is no longer negative and the old rationale said it was. Six paired points now span 0.605 ft of CV against 0.960 ft of board and fit board = 1.674*CV - 5.554 at r 0.918, residual sd 0.192 ft. A foot of CV buys 1.67 ft of board. The earlier negative reading came from five submissions differing only in correction-stack constants and spanning 0.20 ft of CV, which is smaller than the board's own sd on a difference: the spread was smaller than the instrument. Inverting the fit, bronze needs CV about 7.15 and gold about 6.0. ROGII is capped by recombination, so the breadth count is distinct forward model and observation routes rather than model families. CORRECTED 2026-08-05 22:36: the board-difference sd is 0.2782 ft, not the 0.1613 ft that probe_lb_resolving_power modelled from 52 assumed wells. Refitting all ELEVEN scored submissions gives LB = -1.640 + 1.163*CV at r 0.911 with residual sd 0.1967 ft per submission, which is what the 'residual sd 0.192 ft' above already said from six points. THIS FILE HELD THE BETTER NUMBER AND THE PROBE'S MODELLED ONE WAS USED ANYWAY. Any argument resting on a board delta under about 0.55 ft is not significant at 2 sd.",
+  "inadmissible_stop_reasons": [
+    "not enough time remaining",
+    "too close to the deadline",
+    "this is post-deadline work",
+    "this is a multi-day build",
+    "the remaining ideas are too speculative",
+    "we have plateaued",
+    "every axis is closed",
+    "the expected gain is too small to be worth it",
+    "further work is unlikely to succeed",
+    "the score is already locked in by the selected picks",
+    "the remaining time is better spent documenting"
+  ],
+  "admissible_stop_reasons": [
+    "the objective is reached",
+    "the deadline has passed",
+    "the owner instructs the work to stop",
+    "an external blocker prevents the next bounded experiment, named explicitly, with the attempt that hit it"
+  ],
+  "next_action_must_be_executable_now": true,
+  "deferral_markers": [
+    "post-deadline",
+    "post deadline",
+    "after the deadline",
+    "multi-day",
+    "multi day",
+    "not worth the time",
+    "no time",
+    "out of time",
+    "too late",
+    "future session",
+    "next session",
+    "someone else picks"
+  ],
+  "note_on_difficulty": "Difficulty, a run of washes, a closed axis, a small expected gain, and a shortage of remaining hours are NOT blockers. They are the normal state of this problem. When every listed axis closes, the required response is to open a new one and name its first bounded experiment, not to report that the search is exhausted. A large idea is not deferred because it is large; it is decomposed until its first step fits the time available, and that step is run.",
+  "medal_lb_note": "Recomputed 2026-08-04 from the downloaded public leaderboard at 6,109 teams: gold is top 22 (10 + 0.2 percent), silver top 305, bronze top 610. The earlier 6.479 / 6.444 / 5.899 came from a 5,714-team snapshot. 899 teams sit in [6.40, 6.50) and 349 in [6.30, 6.40), so clearing 6.40 is worth about 1,200 places and entering that band is worth almost nothing.",
+  "final_state_2026_08_05": {
+    "selection": [
+      "55244616",
+      "55244617"
+    ],
+    "best_cv_corrected_ramped": 7.159317,
+    "best_public_lb": 6.618,
+    "submissions_unspent": 3,
+    "campaign_outcome": "UNREACHED against goal_cv 6.0; ends at 7.1593, about the bronze CV threshold",
+    "transferable_lesson": "Measure submission latency on day one. The 5h20m-7h30m figure in QUEUE.md was wrong by ~35x (measured 10 min end to end at 22:08 on the final evening) and it shaped the whole final day, ruling out bag4_add's 5h retrain as unaffordable when it fitted with seven hours to spare."
+  }
+}

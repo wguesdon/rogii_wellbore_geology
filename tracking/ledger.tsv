@@ -1,0 +1,53 @@
+base	date	standalone	errcorr_leak	errcorr_nogeom	blendadd_leak	null_leak	blendadd_nogeom	null_nogeom	folds_improved_leak	verdict	note
+lgbdivkin	2026-07-26	9.5130	0.904	0.933	-0.0044	-0.0010	+0.0049	-0.0038	4/5	WASH	
+lgbmedall_2026_07_26	2026-07-26	9.2186	0.926	0.955	+0.0062	-0.0008	+0.0106	-0.0046	3/5	WASH	local pilot recipe, row-step 4
+lgbmedrate_2026_07_26	2026-07-26	9.5645	0.901	0.924	-0.0021	+0.0030	+0.0010	-0.0028	2/5	WASH	local pilot recipe, row-step 4
+lgbmedwell_2026_07_26	2026-07-26	9.2131	0.925	0.953	+0.0056	-0.0010	+0.0092	-0.0056	3/5	WASH	local pilot recipe, row-step 4, equal weight per well
+cnn_1d_v1_5f	2026-07-26	13.2994	0.598	0.574	-0.0314	-0.0138	-0.1193	-0.0664	4/5	KEEP	CNN 1D head v1 (resid, w-smooth 0), 5 folds: f0 banked + f1-4 job 2026-07-26-19-46-20
+cnn_1d_hfut384	2026-07-28	13.6161	0.604	0.589	-0.0202	-0.0082	-0.0858	-0.0420	5/5	MARGINAL	
+cnn_1d_v1_s7	2026-07-28	13.1950	0.609	0.586	-0.0263	-0.0096	-0.1140	-0.0593	3/5	KEEP	
+cnn_1d_v1_s123	2026-07-28	13.4012	0.614	0.594	-0.0104	-0.0041	-0.0788	-0.0368	3/5	MARGINAL	
+cnn_1d_wlocal1	2026-07-28	13.3659	0.595	0.568	-0.0257	-0.0139	-0.1112	-0.0736	4/5	MARGINAL	
+cnn_1d_v1_avg3	2026-07-28	12.9617	0.622	0.600	-0.0274	-0.0102	-0.1218	-0.0610	3/5	KEEP	
+cnn_1d_dim128	2026-07-28	13.5137	0.600	0.578	-0.0198	-0.0097	-0.0863	-0.0546	4/5	MARGINAL	
+cnn_1d_v1_avg5	2026-07-28	12.9076	0.624	0.601	-0.0281	-0.0105	-0.1202	-0.0616	3/5	KEEP	
+cnn_1d_v1_s2026	2026-07-28	13.2675	0.609	0.586	-0.0220	-0.0099	-0.1001	-0.0525	4/5	MARGINAL	
+cnn_1d_direct	2026-07-28	14.4079	0.566	0.557	-0.0044	-0.0119	-0.0612	-0.0603	2/5	WASH	
+cnn_1d_mdn5	2026-07-28	13.1592	0.607	0.587	-0.0371	-0.0103	-0.1252	-0.0485	5/5	KEEP	
+cnn_1d_mdn3	2026-07-28	13.5031	0.609	0.583	-0.0122	-0.0023	-0.0702	-0.0321	4/5	MARGINAL	
+cnn_sdf_nogeom_5f	2026-07-28	17.2877	0.457	0.468	-0.0397	-0.0304	-0.0503	-0.0379	4/5	MARGINAL	
+pfz_v1	2026-07-28	15.7645	0.559	0.587	+0.0061	+0.0035	+0.0088	+0.0034	2/5	WASH	
+untried19_lam0.01	2026-07-28	26.6275	0.226	0.232	-0.0396	-0.0205	-0.0439	-0.0281	4/5	MARGINAL	
+pfz_affine_v1_2026_07_29	2026-07-29	15.8284	0.577	0.606	+0.0057	+0.0005	+0.0051	-0.0003	1/5	WASH	
+pfz_joint_deflated_tight_v1_2026_07_29	2026-07-29	40.6405	0.286	0.304	-0.0039	+0.0001	+0.0058	+0.0033	2/5	WASH	
+untried19_lam0.01_sg5	2026-07-29	26.6806	0.191	0.185	-0.0723	-0.0327	-0.1032	-0.0443	4/5	KEEP	
+untried19_lam0.01_bp65	2026-07-30	30.7596	0.254	0.261	-0.0070	-0.0021	-0.0045	+0.0055	3/5	WASH	
+untried19_lam0.01_post_sg5	2026-07-30	21.8660	0.333	0.338	-0.0206	-0.0094	-0.0254	-0.0161	4/5	MARGINAL	
+lgbmede2feature_2026_07_31	2026-07-31	9.0484	0.924	0.951	-0.0046	-0.0003	-0.0421	-0.0119	3/5	MARGINAL	
+untried19_ratehmm_posterior_sg5	2026-07-31	19.4995	0.219	0.228	-0.1883	-0.0940	-0.2146	-0.1187	5/5	KEEP	
+lgbmede2ratefeature_2026_07_31	2026-07-31	8.7453	0.893	0.920	-0.1882	-0.0102	-0.2582	-0.0374	5/5	KEEP	
+untried19_ratehmm_posterior_reversecal_sg5	2026-07-31	19.4995	0.219	0.228	-0.1883	-0.0940	-0.2146	-0.1187	5/5	KEEP	
+lgbmede2ratecoupledfeature_2026_08_01	2026-08-01	8.5161	0.874	0.903	-0.3323	-0.0197	-0.4088	-0.0481	5/5	KEEP	
+lgbmedfutureu_2026_08_01	2026-08-01	8.4986	0.878	0.906	-0.3297	-0.0191	-0.4084	-0.0488	5/5	KEEP	
+untried19_ratehmm_boundary_real_sg5	2026-08-01	17.5165	0.247	0.252	-0.2104	-0.1039	-0.2578	-0.1396	4/5	KEEP	boundary E2 posterior, fixed 0.25 score
+lgbmede2ratecoupledboundaryfeature_2026_08_01	2026-08-01	8.5035	0.866	0.891	-0.3172	-0.0238	-0.4104	-0.0576	5/5	KEEP	boundary feature GBDT, replacement stack regresses +0.0076
+surfacetransfer_2026_08_01	2026-08-01	25.0720	0.327	0.297	+0.0032	+0.0027	+0.0149	+0.0090	3/5	WASH	
+lgbmede2ratecoupledfeature_2026_08_01_full	2026-08-01	8.5037	0.874	0.903	-0.3249	-0.0216	-0.3997	-0.0522	5/5	KEEP	
+lgbmedsurfacefeature_2026_08_02	2026-08-02	8.5410	0.876	0.903	-0.2841	-0.0185	-0.3739	-0.0507	4/5	KEEP	
+lgbmede2ratecoupledwindowevidencefeature_2026_08_03	2026-08-03	8.4788	0.874	0.903	-0.3522	-0.0217	-0.4310	-0.0534	4/5	KEEP	
+untried19_ratehmm_public_sg5	2026-08-03	27.0097	0.118	0.116	-0.1487	-0.0889	-0.1797	-0.1170	5/5	KEEP	
+untried19_selfref_lam0.01_sg5	2026-08-03	27.4834	0.175	0.177	-0.0823	-0.0469	-0.0965	-0.0632	5/5	MARGINAL	
+tomcumsum_md_clf	2026-08-03	32.2632	0.252	0.222	+0.0027	-0.0003	-0.0113	+0.0002	2/5	MARGINAL	
+dztemplate_ab	2026-08-03	42.6309	0.231	0.232	-0.0017	+0.0017	+0.0284	+0.0246	2/5	WASH	
+untried19_rategenerated_sg5	2026-08-03	33.9114	0.244	0.238	+0.0116	+0.0016	+0.0079	+0.0029	1/5	WASH	
+tomcumsum_md_grncc	2026-08-03	135.5142	0.048	0.054	+0.0023	-0.0012	+0.0105	+0.0052	3/5	WASH	
+seqalt_gru_v1_s42	2026-08-03	12.6878	0.595	0.564	-0.0551	-0.0207	-0.1864	-0.0928	4/5	KEEP	GRU horizontal encoder swapped into Seq1DNet; resid/5.0/0.0/80
+seqalt_gru_psr2	2026-08-03	10.7860	0.535	0.507	-0.3441	-0.0935	-0.5612	-0.1979	5/5	KEEP	
+seqalt_gru_gr9	2026-08-03	11.9706	0.547	0.515	-0.1972	-0.0598	-0.3901	-0.1724	5/5	KEEP	
+seqalt_gru_wshape2g025	2026-08-03	12.2202	0.547	0.520	-0.1697	-0.0582	-0.3297	-0.1484	5/5	KEEP	
+untried19_ratehmm_post_band_sg5	2026-08-05	24.5790	0.262	0.265	-0.0325	-0.0193	-0.0420	-0.0239	5/5	MARGINAL	structural repair of the rate band limit and OU mean reversion
+untried19_ratehmm_post_ouband_sg5	2026-08-05	27.1511	0.272	0.285	-0.0072	-0.0087	-0.0022	-0.0030	3/5	WASH	structural repair of the rate band limit and OU mean reversion
+untried19_ratehmm_post_oubandpx_sg5	2026-08-05	23.7098	0.271	0.277	-0.0330	-0.0240	-0.0436	-0.0292	5/5	MARGINAL	structural repair of the rate band limit and OU mean reversion
+untried19_ratehmm_post_ou_sg5	2026-08-05									REJECTED	untried19_ratehmm_post_ou_sg5: contains non-finite values
+physv48_selector	2026-08-05	10.4451	0.786	0.822	+0.0173	+0.0005	+0.0214	-0.0190	3/5	WASH	ROGII Physics v48 selector, contact lookup and Q0522 removed
+physv48_selector_pf8	2026-08-05	11.0567	0.724	0.762	+0.0164	+0.0019	+0.0197	-0.0208	3/5	WASH	ROGII Physics v48 selector, contact lookup and Q0522 removed

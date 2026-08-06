@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[co]
+.DS_Store
+
+# Competition inputs and private model artifacts
+artifacts/
+data/
+outputs/
+*.csv
+!tracking/ledger.tsv
+
+# Local experiment database
+experiments.db

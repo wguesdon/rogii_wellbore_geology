@@ -1,0 +1,21 @@
+{
+  "id": "YOUR_KAGGLE_USERNAME/rogii-setk-multipath-psr4avg9",
+  "title": "ROGII final multipath solution",
+  "code_file": "solution.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "competition_sources": ["rogii-wellbore-geology-prediction"],
+  "dataset_sources": [
+    "wguesdon/rogii-models-v6",
+    "wguesdon/rogii-div-models-v1",
+    "wguesdon/rogii-realmlp-models",
+    "wguesdon/rogii-realmlp-wheels",
+    "wguesdon/rogii-cnn1d-models",
+    "wguesdon/rogii-ratecoupled-gbdt",
+    "wguesdon/rogii-seqalt-gru-psr4avg9"
+  ],
+  "kernel_sources": []
+}
