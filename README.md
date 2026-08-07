@@ -25,7 +25,7 @@ inference block while sharing the same nine seed base.
 * `QUEUE.md` records the next bounded experiments and their commands.
 * `SESSION_SUMMARY.md` is the dated competition handoff, including late
   measurements and the final selection state.
-* `tracking/ledger.tsv` records every gated base and its rolled null result.
+* `LEDGER.tsv` records every gated base and its rolled null result.
 * `tracking/track_kaggle_runs.py` maintains a local SQLite record of Kaggle
   scores. The database is created locally and is not committed.
 * `writeup/kaggle_writeup.md` is the Kaggle writeup copy.
@@ -73,10 +73,23 @@ mkdir -p data/raw kaggle_datasets
 make run-multipath
 ```
 
-For local execution, place the competition files under `data/raw` and the
-seven Kaggle dataset directories under `kaggle_datasets`. The directory names
-must match the final path component of each dataset slug. The scripts search
-those paths before searching `/kaggle/input`.
+For local execution, place the competition files under `data/raw`. Place the
+Kaggle artifacts under `kaggle_datasets` using this layout:
+
+```text
+kaggle_datasets/
+  rogii-models-v6/
+  rogii-div-models-v1/
+  realmlp_models/
+  realmlp_wheels/pytabkit-1.7.3-py3-none-any.whl
+  rogii-cnn1d-models/
+  rogii-ratecoupled-gbdt/
+  rogii-seqalt-gru-psr4avg9/
+```
+
+The two RealMLP directories retain their artifact bundle names from the
+original Kaggle inputs. The pipeline also accepts a slug named offline wheel
+bundle.
 
 Use the single path selection instead with:
 
@@ -86,9 +99,11 @@ make run-single-path
 
 ## Use the experiment harness
 
-The harness was built for a full experiment checkout with OOF grids,
-prediction banks, and raw competition data. Its code is included as a release
-of the method, not as a standalone generic package.
+The harness needs a full experiment checkout with OOF grids, prediction banks,
+and raw competition data. The public release contains its operating documents,
+gate, reciprocal selection check, continuation generator, and a preflight
+that verifies the three known winner records after the private artifacts are
+restored.
 
 ```bash
 make harness-status
@@ -100,11 +115,15 @@ make track-list
 
 Read [`harness/README.md`](harness/README.md) and
 [`AGENTS.md`](AGENTS.md) before adapting it. `AGENTS.md`, `QUEUE.md`,
-`tracking/ledger.tsv`, and `SESSION_SUMMARY.md` are the original compact read
+`LEDGER.tsv`, and `SESSION_SUMMARY.md` are the original compact read
 path. The first three are the operating context. The session summary preserves
 the final competition handoff. `gate.py` retains the competition specific known
 winner checks so that a copied experiment does not silently report a number
 from a broken data layout.
+
+`make preflight` returns a clear failure when the private artifact bank is not
+present. It does not include the original private particle filter source
+validator, which was outside the release scope.
 
 ## Writeup
 

@@ -8,7 +8,7 @@ artifacts/
 data/
 outputs/
 *.csv
-!tracking/ledger.tsv
 
 # Local experiment database
 experiments.db
+scratchpad/

@@ -191,6 +191,7 @@ def find_ratecoupled_model_root() -> Path:
 REALMLP_MODEL_NAME = "realmlp_v1_s42_all.pkl"
 REALMLP_FEATURES_NAME = "realmlp_feature_names.json"
 REALMLP_PREPROCESS_NAME = "realmlp_preprocess_np.npz"
+PYTABKIT_WHEEL_NAME = "pytabkit-1.7.3-py3-none-any.whl"
 
 
 def find_realmlp_root() -> Path:
@@ -272,15 +273,24 @@ def ensure_pytabkit() -> None:
         return
     except ImportError:
         pass
-    import glob
     import subprocess
 
-    hits = glob.glob("/kaggle/input/**/pytabkit*.whl", recursive=True)
-    if not hits:
-        raise FileNotFoundError("pytabkit wheel not found under /kaggle/input.")
+    candidates = [
+        Path("/kaggle/input/rogii-realmlp-wheels") / PYTABKIT_WHEEL_NAME,
+        Path("/kaggle/input/datasets/wguesdon/rogii-realmlp-wheels") / PYTABKIT_WHEEL_NAME,
+        Path.cwd() / "kaggle_datasets" / "realmlp_wheels" / PYTABKIT_WHEEL_NAME,
+        Path.cwd().parent / "kaggle_datasets" / "realmlp_wheels" / PYTABKIT_WHEEL_NAME,
+        Path.cwd() / "kaggle_datasets" / "rogii-realmlp-wheels" / PYTABKIT_WHEEL_NAME,
+        Path.cwd().parent / "kaggle_datasets" / "rogii-realmlp-wheels" / PYTABKIT_WHEEL_NAME,
+    ]
+    wheel = next((path for path in candidates if path.is_file()), None)
+    if wheel is None:
+        raise FileNotFoundError(
+            f"Could not locate the pinned offline wheel {PYTABKIT_WHEEL_NAME}."
+        )
     subprocess.check_call([
         sys.executable, "-m", "pip", "install", "--no-index",
-        "--find-links", str(Path(hits[0]).parent), "pytabkit",
+        "--find-links", str(wheel.parent), "pytabkit==1.7.3",
     ])
     import pytabkit  # noqa: F401
 

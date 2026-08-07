@@ -1,6 +1,6 @@
 # Agent instructions
 
-Read `tracking/ledger.tsv`, `harness/forward_axes.json`, and
+Read `LEDGER.tsv`, `harness/forward_axes.json`, and
 `harness/forward_target.json` before proposing work.
 
 Run one bounded experiment at a time. Every candidate must clear the

@@ -14,7 +14,7 @@ of the harness, not ancillary documentation. `AGENTS.md` is canonical.
 | `breadth_gate.py` | Tracks open research axes and prevents unsupported campaign completion. |
 | `forward_axes.json` | The ordered research queue, evidence, and close criteria. |
 | `forward_target.json` | Objective and stop conditions. |
-| `../tracking/ledger.tsv` | The gated record of candidates. |
+| `../LEDGER.tsv` | The gated record of candidates. |
 
 The ROGII gate requires the competition data, prediction banks, and feature
 artifacts. They are deliberately absent from this public repository. The
